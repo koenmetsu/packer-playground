@@ -21,8 +21,8 @@ NOMADDOWNLOAD=https://releases.hashicorp.com/nomad/${NOMADVERSION}/nomad_${NOMAD
 NOMADCONFIGDIR=/etc/nomad.d
 NOMADDIR=/opt/nomad
 
-#$DOCKERREPO=ubuntu-`lsb_release -c | awk '{print $2}'`
-$DOCKERREPO=ubuntu-zesty
+#DOCKERREPO=ubuntu-`lsb_release -c | awk '{print $2}'`
+DOCKERREPO=ubuntu-zesty
 
 # Dependencies
 sudo apt-get install -y software-properties-common
