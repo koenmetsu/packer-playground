@@ -6,7 +6,8 @@
     "instance_type":        "t2.medium",
     "vpc_id":               "vpc-e981078c", 
     "subnet_id":            "subnet-1552c962",
-    "destination_regions":  "eu-west-1,eu-west-2,eu-central-1"
+    "_destination_regions":  "eu-west-1,eu-west-2,eu-central-1",
+    "destination_regions":  "eu-west-2"
   },
   "builders": [
     {
@@ -31,7 +32,7 @@
       "instance_type": "{{user `instance_type`}}",
       "ssh_username": "ubuntu",
 
-      "ami_name": "hashistack-{{isotime | clean_ami_name}}-{{timestamp}}",
+      "ami_name": "hashistack-{{isotime | clean_ami_name}}",
       "ami_description": "HashiCorp Nomad + Consul + Vault",
       "ami_regions": "{{user `destination_regions`}}",
 
