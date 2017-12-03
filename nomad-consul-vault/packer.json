@@ -1,0 +1,84 @@
+{
+  "variables": {
+    "aws_access_key":       "{{env `AWS_ACCESS_KEY_ID`}}",
+    "aws_secret_key":       "{{env `AWS_SECRET_ACCESS_KEY`}}",
+    "region":               "eu-west-1",
+    "instance_type":        "t2.medium",
+    "vpc_id":               "vpc-e981078c", 
+    "subnet_id":            "subnet-1552c962",
+    "destination_regions":  "eu-west-1,eu-west-2,eu-central-1"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu/images/*ubuntu-artful-17.10-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+
+      "region": "{{user `region`}}",
+      "vpc_id": "{{user `vpc_id`}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "associate_public_ip_address": true,
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "ubuntu",
+
+      "ami_name": "hashistack-{{isotime | clean_ami_name}}-{{timestamp}}",
+      "ami_description": "HashiCorp Nomad + Consul + Vault",
+      "ami_regions": "{{user `destination_regions`}}",
+
+      "tags": {
+        "OS_Version": "Ubuntu",
+        "Release": "17.10"
+      },
+
+      "launch_block_device_mappings": [
+        {
+          "device_name": "/dev/sda1",
+          "volume_size": 10,
+          "volume_type": "gp2",
+          "delete_on_termination": true
+        }
+      ],
+      "ami_block_device_mappings": [
+        {
+          "device_name": "/dev/sdb",
+          "volume_type": "gp2",
+          "volume_size": 40,
+          "delete_on_termination": false
+        }
+      ]
+    }
+  ],
+  "provisioners":  [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo mkdir /ops",
+        "sudo chmod 777 /ops"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "config",
+      "destination": "/ops"
+    },
+    {
+      "type": "file",
+      "source": "scripts",
+      "destination": "/ops"
+    },
+    {
+      "type": "shell",
+      "script": "scripts/setup.sh"
+    }
+  ]
+}
