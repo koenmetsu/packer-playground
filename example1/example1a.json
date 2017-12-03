@@ -21,6 +21,7 @@
       "ssh_username": "ubuntu",
       "ami_name": "packer-example {{timestamp}}",
       "vpc_id": "vpc-e981078c", 
-      "subnet_id": "subnet-1552c962" 
+      "subnet_id": "subnet-1552c962",
+      "associate_public_ip_address": true
     }]
   }
