@@ -2,12 +2,11 @@
   "variables": {
     "aws_access_key":       "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_key":       "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "region":               "eu-west-1",
     "instance_type":        "t2.medium",
     "vpc_id":               "vpc-e981078c", 
     "subnet_id":            "subnet-1552c962",
-    "_destination_regions":  "eu-west-1,eu-west-2,eu-central-1",
-    "destination_regions":  "eu-west-2"
+    "region":               "eu-west-1",
+    "destination_regions":  "eu-west-2,eu-central-1"
   },
   "builders": [
     {
@@ -33,11 +32,12 @@
       "ssh_username": "ubuntu",
 
       "ami_name": "hashistack-{{isotime | clean_ami_name}}",
-      "ami_description": "HashiCorp Nomad + Consul + Vault",
+      "ami_description": "HashiCorp Nomad + Consul + Vault built on {{isotime}}",
       "ami_regions": "{{user `destination_regions`}}",
 
       "tags": {
-        "OS_Version": "Ubuntu",
+        "Name": "HashiCorp Nomad + Consul + Vault - {{isotime}}",
+        "OS": "Ubuntu",
         "Release": "17.10"
       },
 
