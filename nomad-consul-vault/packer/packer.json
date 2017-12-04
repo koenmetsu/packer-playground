@@ -69,17 +69,23 @@
     },
     {
       "type": "file",
-      "source": "config",
+      "source": "../terraform/config",
       "destination": "/ops"
     },
     {
       "type": "file",
-      "source": "scripts",
+      "source": "../terraform/scripts",
       "destination": "/ops"
     },
     {
       "type": "shell",
-      "script": "scripts/setup.sh"
+      "scripts": [
+        "scripts/base.sh",
+        "scripts/consul.sh",
+        "scripts/vault.sh",
+        "scripts/nomad.sh",
+        "scripts/docker.sh"
+      ]
     }
   ]
 }

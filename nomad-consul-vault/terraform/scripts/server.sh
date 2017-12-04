@@ -38,6 +38,17 @@ sudo cp $CONFIGDIR/vault.service /etc/systemd/system/vault.service
 
 sudo systemctl start vault.service
 
+# sleep 5
+# export VAULT_ADDR=http://127.0.0.1:8200
+# TOKEN=$(grep 'Root Token' /var/log/vault/out | tail -n1 | awk '{print $3}')
+# echo $TOKEN | vault auth -
+# vault token-create -id="1e9e1f5a-3c23-a5d2-d308-ed2c3dd541c4"
+# vault auth 1e9e1f5a-3c23-a5d2-d308-ed2c3dd541c4
+# vault policy-write secret /vagrant/acl.hcl
+# vault write /auth/token/roles/nomad-cluster @/vagrant/nomad-cluster-role.json
+# vault policy-write nomad-server /vagrant/nomad-server-policy.hcl
+#echo -n "12345" | vault write secret/password value=-
+
 # Nomad
 sed -i "s/SERVER_COUNT/$SERVER_COUNT/g" $CONFIGDIR/nomad.hcl
 sudo cp $CONFIGDIR/nomad.hcl $NOMADCONFIGDIR
